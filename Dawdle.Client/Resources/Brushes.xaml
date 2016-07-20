@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <Brush x:Key="MenuBackgroundBrush">#333333</Brush>
+    <Brush x:Key="MenuContentBrush">#FFFFFF</Brush>
+    <Brush x:Key="DisabledBrush">#AAAAAA</Brush>
+    <Brush x:Key="MouseOverHighlightBrush">#555555</Brush>
+    <Brush x:Key="ScrollBarBrush">#AAAAAA</Brush>
+
+</ResourceDictionary>
