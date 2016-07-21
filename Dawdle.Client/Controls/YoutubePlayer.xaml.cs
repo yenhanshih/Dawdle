@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Media.Animation;
+using Meta.Vlc.Wpf;
 
 namespace Dawdle.Client.Controls
 {
     public partial class YoutubePlayer
     {
         private static bool _isMediaLoaded;
+        private static bool _isDraggingSlider;
 
         public static readonly DependencyProperty VideoUriProperty = DependencyProperty.Register("VideoUri", typeof(Uri), typeof(YoutubePlayer), new PropertyMetadata(VideoUriChanged));
 
@@ -26,6 +31,27 @@ namespace Dawdle.Client.Controls
         public YoutubePlayer()
         {
             InitializeComponent();
+
+            VlcPlayer.TimeChanged += VlcPlayerOnTimeChanged;
+            VlcPlayer.LengthChanged += VlcPlayerOnLengthChanged;
+        }
+
+        private void VlcPlayerOnTimeChanged(object sender, EventArgs e)
+        {
+            if (!_isDraggingSlider)
+            {
+                var time = ((VlcPlayer)sender).Time;
+                CurrentTime.Text = time.ToString("hh\\:mm\\:ss");
+                PlayerProgressBar.Value = time.TotalSeconds;
+            }
+        }
+
+        private void VlcPlayerOnLengthChanged(object sender, EventArgs e)
+        {
+            var length = ((VlcPlayer)sender).Length;
+            CurrentLength.Text = length.ToString("hh\\:mm\\:ss");
+            PlayerProgressBar.Minimum = 0;
+            PlayerProgressBar.Maximum = length.TotalSeconds;
         }
 
         private static void VideoUriChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -51,6 +77,29 @@ namespace Dawdle.Client.Controls
             {
                 player.VlcPlayer.Pause();
             }
+        }
+
+        private void PlayerProgressBar_OnDragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            VlcPlayer.Time = TimeSpan.FromSeconds(PlayerProgressBar.Value);
+            _isDraggingSlider = false;
+        }
+
+        private void PlayerProgressBar_OnDragStarted(object sender, DragStartedEventArgs e)
+        {
+            _isDraggingSlider = true;
+        }
+
+        private void YoutubePlayer_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            var animation = new DoubleAnimation(0, 0.8, new Duration(new TimeSpan(0, 0, 0, 0, 500)));
+            PlayerControls.BeginAnimation(OpacityProperty, animation);
+        }
+
+        private void YoutubePlayer_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            var animation = new DoubleAnimation(0.8, 0, new Duration(new TimeSpan(0, 0, 0, 0, 500)));
+            PlayerControls.BeginAnimation(OpacityProperty, animation);
         }
     }
 }

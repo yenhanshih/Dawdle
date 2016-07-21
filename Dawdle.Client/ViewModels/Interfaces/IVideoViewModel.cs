@@ -1,5 +1,4 @@
 ﻿using System;
-using Dawdle.Client.Common;
 
 namespace Dawdle.Client.ViewModels.Interfaces
 {
@@ -8,6 +7,5 @@ namespace Dawdle.Client.ViewModels.Interfaces
     {
         Uri ActualUri { get; }
         bool IsPlaying { get; }
-        RelayCommand PlayPause { get; }
     }
 }

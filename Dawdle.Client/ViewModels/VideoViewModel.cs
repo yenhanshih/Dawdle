@@ -43,16 +43,5 @@ namespace Dawdle.Client.ViewModels
                 IsPlaying = true;
             });
         }
-
-        private RelayCommand _playPause;
-        public RelayCommand PlayPause{
-            get
-            {
-                return _playPause ?? (_playPause = new RelayCommand(_ =>
-                {
-                    IsPlaying = !IsPlaying;
-                }));
-            }
-        }
     }
 }
