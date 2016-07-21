@@ -27,7 +27,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Slider x:Name="PlayerProgressBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" IsMoveToPointEnabled="True" Thumb.DragStarted="PlayerProgressBar_OnDragStarted"  Thumb.DragCompleted="PlayerProgressBar_OnDragCompleted"/>
+                <Slider x:Name="PlayerProgressBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" IsMoveToPointEnabled="True" Thumb.DragStarted="PlayerProgressBar_OnDragStarted" Thumb.DragDelta="PlayerProgressBar_OnDragDelta"  Thumb.DragCompleted="PlayerProgressBar_OnDragCompleted"/>
                 
                 <TextBlock x:Name="CurrentTime" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Foreground="{DynamicResource MenuContentBrush}" />
                 <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="/" Foreground="{DynamicResource MenuContentBrush}" />

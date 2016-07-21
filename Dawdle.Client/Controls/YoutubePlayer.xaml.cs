@@ -78,18 +78,6 @@ namespace Dawdle.Client.Controls
                 player.VlcPlayer.Pause();
             }
         }
-
-        private void PlayerProgressBar_OnDragCompleted(object sender, DragCompletedEventArgs e)
-        {
-            VlcPlayer.Time = TimeSpan.FromSeconds(PlayerProgressBar.Value);
-            _isDraggingSlider = false;
-        }
-
-        private void PlayerProgressBar_OnDragStarted(object sender, DragStartedEventArgs e)
-        {
-            _isDraggingSlider = true;
-        }
-
         private void YoutubePlayer_OnMouseEnter(object sender, MouseEventArgs e)
         {
             var animation = new DoubleAnimation(0, 0.8, new Duration(new TimeSpan(0, 0, 0, 0, 500)));
@@ -100,6 +88,22 @@ namespace Dawdle.Client.Controls
         {
             var animation = new DoubleAnimation(0.8, 0, new Duration(new TimeSpan(0, 0, 0, 0, 500)));
             PlayerControls.BeginAnimation(OpacityProperty, animation);
+        }
+
+        private void PlayerProgressBar_OnDragStarted(object sender, DragStartedEventArgs e)
+        {
+            _isDraggingSlider = true;
+        }
+
+        private void PlayerProgressBar_OnDragDelta(object sender, DragDeltaEventArgs e)
+        {
+            CurrentTime.Text = TimeSpan.FromSeconds(PlayerProgressBar.Value).ToString("hh\\:mm\\:ss");
+        }
+
+        private void PlayerProgressBar_OnDragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            VlcPlayer.Time = TimeSpan.FromSeconds(PlayerProgressBar.Value);
+            _isDraggingSlider = false;
         }
     }
 }
