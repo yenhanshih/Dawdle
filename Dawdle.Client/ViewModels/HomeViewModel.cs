@@ -25,7 +25,18 @@ namespace Dawdle.Client.ViewModels
                 _videos = value;
                 OnPropertyChanged();
             }
-        }  
+        }
+
+        private string _searchText;
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged();
+            }
+        }
 
         public HomeViewModel(IMainViewModel parentMainViewModel)
         {
@@ -45,6 +56,19 @@ namespace Dawdle.Client.ViewModels
                     var youtube = await YouTube.GetUrisAsync(resourceId.VideoId.ToString());
                     _parentMainViewModel.ChangeContext(Context.Play);
                     _parentMainViewModel.ReceivedPlaySignal.OnNext(youtube.First().Uri);
+                }));
+            }
+        }
+
+        private RelayCommand _search;
+
+        public RelayCommand Search
+        {
+            get
+            {
+                return _search ?? (_search = new RelayCommand(_ =>
+                {
+                    GetYoutubeVideoTitles(SearchText);
                 }));
             }
         }

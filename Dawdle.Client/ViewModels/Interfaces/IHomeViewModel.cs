@@ -9,5 +9,7 @@ namespace Dawdle.Client.ViewModels.Interfaces
     {
         List<SearchResult> Videos { get; }
         RelayCommand PlayVideo { get; }
+        RelayCommand Search { get; }
+        string SearchText { get; set; }
     }
 }
