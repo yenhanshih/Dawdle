@@ -72,12 +72,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Meta.Vlc, Version=16.5.1.0, Culture=neutral, PublicKeyToken=721a8c5379fa4056, processorArchitecture=x86">
-      <HintPath>..\packages\Meta.Vlc.16.05.01\lib\net45\x86\Meta.Vlc.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Meta.Vlc.17.06.20\lib\net45\x86\Meta.Vlc.dll</HintPath>
     </Reference>
     <Reference Include="Meta.Vlc.Wpf, Version=16.5.1.0, Culture=neutral, PublicKeyToken=721a8c5379fa4056, processorArchitecture=x86">
-      <HintPath>..\packages\Meta.Vlc.Wpf.16.05.01.2\lib\net45\x86\Meta.Vlc.Wpf.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Meta.Vlc.Wpf.17.06.20\lib\net45\x86\Meta.Vlc.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="MyToolkit, Version=2.5.12.0, Culture=neutral, PublicKeyToken=3e349a1360994d26, processorArchitecture=MSIL">
       <HintPath>..\packages\MyToolkit.2.5.12.0\lib\portable-net45+wp8+win8+wpa81\MyToolkit.dll</HintPath>
