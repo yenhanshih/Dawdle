@@ -7,7 +7,6 @@
              xmlns:buttons="clr-namespace:Dawdle.Client.Controls.Buttons"
              mc:Ignorable="d"
              DataContext="{Binding Source={common:Locate}, Path=MenuViewModel}">
-
     <StackPanel Height="50">
         <Grid Background="{DynamicResource MenuBackgroundBrush}">
             <Grid.RowDefinitions>
@@ -18,37 +17,19 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <buttons:IconButton Grid.Column="0"
-                                Style="{StaticResource IconButton}" 
-                                Foreground="{DynamicResource MenuContentBrush}" 
-                                Icon="{DynamicResource MenuHome}"
-                                IsChecked="{Binding IsCurrentContextHome}"
-                                Command="{Binding SetHomeView}" />
-            
-            <buttons:IconButton Grid.Column="1"
-                                Style="{StaticResource IconButton}" 
-                                Foreground="{DynamicResource MenuContentBrush}" 
-                                Icon="{DynamicResource MenuWatch}"
-                                IsChecked="{Binding IsCurrentContextPlay}"
-                                Command="{Binding SetVideoView}" />
-        </Grid>
+            <buttons:IconRadioButton Grid.Column="0"
+                                     Style="{StaticResource IconRadioButton}" 
+                                     Foreground="{DynamicResource MenuContentBrush}" 
+                                     Icon="{DynamicResource MenuHome}"
+                                     IsChecked="{Binding IsCurrentContextHome}"
+                                     Command="{Binding SetHomeView}" />
 
-        <Grid Background="{DynamicResource MenuBackgroundBrush}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="50" />
-            </Grid.ColumnDefinitions>
-            
-            <TextBox Grid.Column="0" Margin="10 10 0 10" />
-
-            <buttons:IconButton Grid.Column="1" Margin="5"
-                                Style="{StaticResource IconButton}" 
-                                Foreground="{DynamicResource MenuContentBrush}" 
-                                Icon="{DynamicResource MenuMagnifyIcon}" />
+            <buttons:IconRadioButton Grid.Column="1"
+                                     Style="{StaticResource IconRadioButton}" 
+                                     Foreground="{DynamicResource MenuContentBrush}" 
+                                     Icon="{DynamicResource MenuWatch}"
+                                     IsChecked="{Binding IsCurrentContextPlay}"
+                                     Command="{Binding SetVideoView}" />
         </Grid>
     </StackPanel>
-    
 </UserControl>

@@ -7,12 +7,11 @@
         xmlns:controls="clr-namespace:Dawdle.Client.Controls"
         mc:Ignorable="d"
         DataContext="{Binding Source={common:Locate}, Path=VideoViewModel}">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
-        <controls:YoutubePlayer Grid.Row="0" VideoUri="{Binding ActualUri}" IsPlaying="{Binding IsPlaying}" />
+        
+        <controls:PlayerControl Grid.Row="0" VideoUri="{Binding ActualUri}" IsPlaying="{Binding IsPlaying}" />
     </Grid>
 </UserControl>
