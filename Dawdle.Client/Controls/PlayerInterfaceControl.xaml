@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="Dawdle.Client.Controls.PlayerInterfaceControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:buttons="clr-namespace:Dawdle.Client.Controls.Buttons"
+             xmlns:sliders="clr-namespace:Dawdle.Client.Controls.Sliders"
+             mc:Ignorable="d">
+    <Grid>
+        <Border x:Name="PlayerControlInterface" 
+                VerticalAlignment="Bottom"
+                BorderBrush="{DynamicResource MenuBackgroundBrush}"
+                Background="{DynamicResource MenuBackgroundBrush}"
+                Opacity="0.8">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <sliders:VideoSlider x:Name="ProgressBar" 
+                                     Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                                     Style="{StaticResource VideoSlider}"
+                                     IsMoveToPointEnabled="True" 
+                                     Thumb.DragStarted="ProgressBar_OnDragStarted" Thumb.DragDelta="ProgressBar_OnDragDelta" Thumb.DragCompleted="ProgressBar_OnDragCompleted" />
+                
+                <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="60" />
+                    </Grid.ColumnDefinitions>
+
+                    <buttons:IconButton x:Name="PlayPauseButton"
+                                        Grid.Column="0"
+                                        Style="{StaticResource IconButton}" 
+                                        Foreground="{DynamicResource MenuContentBrush}" 
+                                        Icon="{DynamicResource PauseIcon}"
+                                        Click="PlayPauseButton_OnClick" />
+
+                    <TextBlock x:Name="CurrentTime" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{DynamicResource MenuContentBrush}" />
+                    <TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="/" Foreground="{DynamicResource MenuContentBrush}" />
+                    <TextBlock x:Name="CurrentLength" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="3" Foreground="{DynamicResource MenuContentBrush}" />
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
+

@@ -6,12 +6,27 @@
         xmlns:common="clr-namespace:Dawdle.Client.Common"
         xmlns:controls="clr-namespace:Dawdle.Client.Controls"
         mc:Ignorable="d"
+        MouseEnter="VideoView_OnMouseEnter" MouseLeave="VideoView_OnMouseLeave" MouseDown="VideoView_OnMouseDown"
         DataContext="{Binding Source={common:Locate}, Path=VideoViewModel}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
         </Grid.RowDefinitions>
+
+        <controls:PlayerControl Grid.Row="0" Grid.RowSpan="2"
+                                UriInput="{Binding PlayerControlUriInput, Mode=OneWay}"
+                                PlayingInput="{Binding PlayerControlPlayingInput, Mode=OneWay}"
+                                PlayingOutput="{Binding PlayerControlPlayingOutput, Mode=OneWayToSource}"
+                                TimeInput="{Binding PlayerControlTimeInput, Mode=OneWay}"
+                                TimeOutput="{Binding PlayerControlTimeOutput, Mode=OneWayToSource}"
+                                LengthOutput="{Binding PlayerControlLengthOutput, Mode=OneWayToSource}" />
         
-        <controls:PlayerControl Grid.Row="0" VideoUri="{Binding ActualUri}" IsPlaying="{Binding IsPlaying}" />
+        <controls:PlayerInterfaceControl x:Name="PlayerInterfaceControl" Grid.Row="1"
+                                         PlayingInput="{Binding PlayerControlInterfacePlayingInput, Mode=OneWay}"
+                                         PlayingOutput="{Binding PlayerControlInterfacePlayingOutput, Mode=OneWayToSource}"
+                                         TimeInput="{Binding PlayerInterfaceControlTimeInput, Mode=OneWay}"
+                                         TimeOutput="{Binding PlayerInterfaceControlTimeOutput, Mode=OneWayToSource}"
+                                         LengthInput="{Binding PlayerInterfaceControlLengthInput, Mode=OneWay}" />
     </Grid>
 </UserControl>

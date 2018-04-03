@@ -1,39 +1,57 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls.Primitives;
-using System.Windows.Input;
-using System.Windows.Media.Animation;
 using Vlc.DotNet.Core;
 
 namespace Dawdle.Client.Controls
 {
     public partial class PlayerControl
     {
-        private static bool _isDraggingSlider;
+        public static readonly DependencyProperty UriInputProperty = DependencyProperty.Register("UriInput", typeof(Uri), typeof(PlayerControl), new PropertyMetadata(UriInputted));
 
-        public static readonly DependencyProperty VideoUriProperty = DependencyProperty.Register("VideoUri", typeof(Uri), typeof(PlayerControl), new PropertyMetadata(VideoUriChanged));
-
-        public Uri VideoUri
+        public Uri UriInput
         {
-            get => (Uri)GetValue(VideoUriProperty);
-            set => SetValue(VideoUriProperty, value);
+            set => SetValue(UriInputProperty, value);
         }
 
-        public static readonly DependencyProperty IsPlayingProperty = DependencyProperty.Register("IsPlaying", typeof(bool), typeof(PlayerControl), new PropertyMetadata(IsPlayingChanged));
+        public static readonly DependencyProperty PlayingInputProperty = DependencyProperty.Register("PlayingInput", typeof(bool), typeof(PlayerControl), new PropertyMetadata(PlayingInputted));
 
-        public bool IsPlaying
+        public bool PlayingInput
         {
-            get => (bool)GetValue(IsPlayingProperty);
-            set
-            {
-                Dispatcher.Invoke(() =>
-                {
-                    PlayPauseButton.Icon = value ? (UIElement)FindResource("PauseIcon") : (UIElement)FindResource("PlayIcon");
-                    SetValue(IsPlayingProperty, value);
-                });
-            }
+            set => SetValue(PlayingInputProperty, value);
+        }
+
+        public static readonly DependencyProperty PlayingOutputProperty = DependencyProperty.Register("PlayingOutput", typeof(bool), typeof(PlayerControl));
+
+        public bool PlayingOutput
+        {
+            get => (bool)GetValue(PlayingOutputProperty);
+            set => SetValue(PlayingOutputProperty, value);
+        }
+
+        public static readonly DependencyProperty TimeInputProperty = DependencyProperty.Register("TimeInput", typeof(long), typeof(PlayerControl), new PropertyMetadata(TimeInputted));
+
+        public long TimeInput
+        {
+            set => SetValue(TimeInputProperty, value);
+        }
+
+        public static readonly DependencyProperty TimeOutputProperty = DependencyProperty.Register("TimeOutput", typeof(long), typeof(PlayerControl));
+
+        public long TimeOutput
+        {
+            get => (long)GetValue(TimeOutputProperty);
+            set => SetValue(TimeOutputProperty, value);
+        }
+
+        public static readonly DependencyProperty LengthOutputProperty = DependencyProperty.Register("LengthOutput", typeof(long), typeof(PlayerControl));
+
+        public long LengthOutput
+        {
+            get => (long)GetValue(LengthOutputProperty);
+            set => SetValue(LengthOutputProperty, value);
         }
 
         public PlayerControl()
@@ -41,28 +59,56 @@ namespace Dawdle.Client.Controls
             InitializeComponent();
 
             // Choose x86 or x64 library
-            var vlcDirectoryPath = Path.Combine(Environment.CurrentDirectory, IntPtr.Size == 4 ? "../../../packages/VideoLAN.LibVLC.Windows.3.0.0-alpha/build/x86" : "../../../packages/VideoLAN.LibVLC.Windows.3.0.0-alpha/build/x64");
-            var vlcLibDirectory = new DirectoryInfo(vlcDirectoryPath);
-            VlcControl.SourceProvider.CreatePlayer(vlcLibDirectory);
+            var vlcDirectoryPath = Path.Combine(Environment.CurrentDirectory, IntPtr.Size == 4 ? "../../../packages/VideoLAN.LibVLC.Windows.3.0.0-alpha2/build/x86" : "../../../packages/VideoLAN.LibVLC.Windows.3.0.0-alpha2/build/x64");
+            VlcControl.SourceProvider.CreatePlayer(new DirectoryInfo(vlcDirectoryPath));
 
-            VlcControl.SourceProvider.MediaPlayer.TimeChanged += VlcPlayerOnTimeChanged;
-            VlcControl.SourceProvider.MediaPlayer.LengthChanged += VlcPlayerOnLengthChanged;
+            VlcControl.SourceProvider.MediaPlayer.Playing += MediaPlayerOnPlaying;
+            VlcControl.SourceProvider.MediaPlayer.TimeChanged += MediaPlayerOnTimeChanged;
+            VlcControl.SourceProvider.MediaPlayer.LengthChanged += MediaPlayerOnLengthChanged;
         }
 
-        private static void VideoUriChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private async void MediaPlayerOnPlaying(object sender, VlcMediaPlayerPlayingEventArgs vlcMediaPlayerPlayingEventArgs)
         {
-            var player = (PlayerControl)d;
-
-            ThreadPool.QueueUserWorkItem(i =>
+            await Task.Factory.StartNew(() =>
             {
-                player.VlcControl.SourceProvider.MediaPlayer.Play((Uri)e.NewValue);
+                Dispatcher.Invoke(() =>
+                {
+                    PlayingOutput = VlcControl.SourceProvider.MediaPlayer.IsPlaying();
+                });
             });
         }
 
-        private static void IsPlayingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private async void MediaPlayerOnTimeChanged(object sender, VlcMediaPlayerTimeChangedEventArgs vlcMediaPlayerTimeChangedEventArgs)
+        {
+            await Task.Factory.StartNew(() =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    TimeOutput = vlcMediaPlayerTimeChangedEventArgs.NewTime;
+                });
+            });
+        }
+
+        private async void MediaPlayerOnLengthChanged(object sender, VlcMediaPlayerLengthChangedEventArgs vlcMediaPlayerLengthChangedEventArgs)
+        {
+            await Task.Factory.StartNew(() =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    LengthOutput = VlcControl.SourceProvider.MediaPlayer.Length;
+                });
+            });
+        }
+
+        private static void UriInputted(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var player = (PlayerControl)d;
+            player.VlcControl.SourceProvider.MediaPlayer.SetMedia((Uri)e.NewValue);
+        }
 
+        private static void PlayingInputted(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var player = (PlayerControl)d;
             if ((bool)e.NewValue)
             {
                 ThreadPool.QueueUserWorkItem(i =>
@@ -72,76 +118,17 @@ namespace Dawdle.Client.Controls
             }
             else
             {
-                player.VlcControl.SourceProvider.MediaPlayer.Pause();
-            }
-        }
-
-        private void VlcPlayerOnTimeChanged(object sender, EventArgs e)
-        {
-            if (!_isDraggingSlider)
-            {
-                var time = ((VlcMediaPlayer)sender).Time;
-
-                Dispatcher.Invoke(() =>
+                ThreadPool.QueueUserWorkItem(i =>
                 {
-                    CurrentTime.Text = TimeSpan.FromMilliseconds(time).ToString("hh\\:mm\\:ss");
-                    PlayerProgressBar.Value = time;
+                    player.VlcControl.SourceProvider.MediaPlayer.Pause();
                 });
             }
         }
 
-        private void VlcPlayerOnLengthChanged(object sender, EventArgs e)
+        private static void TimeInputted(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var length = ((VlcMediaPlayer)sender).Length;
-
-            Dispatcher.Invoke(() =>
-            {
-                CurrentLength.Text = TimeSpan.FromMilliseconds(length).ToString("hh\\:mm\\:ss");
-                PlayerProgressBar.Minimum = 0;
-                PlayerProgressBar.Maximum = length;
-            });
-        }
-
-        private void PlayerControl_OnMouseEnter(object sender, MouseEventArgs e)
-        {
-            var animation = new DoubleAnimation(0, 0.8, new Duration(new TimeSpan(0, 0, 0, 0, 500)));
-            PlayerControlInterface.BeginAnimation(OpacityProperty, animation);
-        }
-
-        private void PlayerControl_OnMouseLeave(object sender, MouseEventArgs e)
-        {
-            var animation = new DoubleAnimation(0.8, 0, new Duration(new TimeSpan(0, 0, 0, 0, 500)));
-            PlayerControlInterface.BeginAnimation(OpacityProperty, animation);
-        }
-
-        private void PlayerProgressBar_OnDragStarted(object sender, DragStartedEventArgs e)
-        {
-            _isDraggingSlider = true;
-        }
-
-        private void PlayerProgressBar_OnDragDelta(object sender, DragDeltaEventArgs e)
-        {
-            CurrentTime.Text = TimeSpan.FromMilliseconds(PlayerProgressBar.Value).ToString("hh\\:mm\\:ss");
-        }
-
-        private void PlayerProgressBar_OnDragCompleted(object sender, DragCompletedEventArgs e)
-        {
-            VlcControl.SourceProvider.MediaPlayer.Time = Convert.ToInt64(PlayerProgressBar.Value);
-
-            _isDraggingSlider = false;
-        }
-
-        private void PlayPauseButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (VlcControl.SourceProvider.MediaPlayer.IsPlaying())
-            {
-                IsPlaying = false;
-            }
-
-            if (!VlcControl.SourceProvider.MediaPlayer.IsPlaying())
-            {
-                IsPlaying = true;
-            }
+            var player = (PlayerControl)d;
+            player.VlcControl.SourceProvider.MediaPlayer.Time = (long)e.NewValue;
         }
     }
 }
