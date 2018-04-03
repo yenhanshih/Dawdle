@@ -25,6 +25,7 @@
 
                 <sliders:VideoSlider x:Name="ProgressBar" 
                                      Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                                     Margin="0 -4 0 0"
                                      Style="{StaticResource VideoSlider}"
                                      IsMoveToPointEnabled="True" 
                                      Thumb.DragStarted="ProgressBar_OnDragStarted" Thumb.DragDelta="ProgressBar_OnDragDelta" Thumb.DragCompleted="ProgressBar_OnDragCompleted" />

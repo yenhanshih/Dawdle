@@ -9,14 +9,14 @@ namespace Dawdle.Client.Controls
 {
     public partial class PlayerControl
     {
-        public static readonly DependencyProperty UriInputProperty = DependencyProperty.Register("UriInput", typeof(Uri), typeof(PlayerControl), new PropertyMetadata(UriInputted));
+        public static readonly DependencyProperty UriInputProperty = DependencyProperty.Register("UriInput", typeof(Uri), typeof(PlayerControl), new PropertyMetadata(null, null, UriInputted));
 
         public Uri UriInput
         {
             set => SetValue(UriInputProperty, value);
         }
 
-        public static readonly DependencyProperty PlayingInputProperty = DependencyProperty.Register("PlayingInput", typeof(bool), typeof(PlayerControl), new PropertyMetadata(PlayingInputted));
+        public static readonly DependencyProperty PlayingInputProperty = DependencyProperty.Register("PlayingInput", typeof(bool), typeof(PlayerControl), new PropertyMetadata(false, null, PlayingInputted));
 
         public bool PlayingInput
         {
@@ -31,7 +31,7 @@ namespace Dawdle.Client.Controls
             set => SetValue(PlayingOutputProperty, value);
         }
 
-        public static readonly DependencyProperty TimeInputProperty = DependencyProperty.Register("TimeInput", typeof(long), typeof(PlayerControl), new PropertyMetadata(TimeInputted));
+        public static readonly DependencyProperty TimeInputProperty = DependencyProperty.Register("TimeInput", typeof(long), typeof(PlayerControl), new PropertyMetadata((long)0, null, TimeInputted));
 
         public long TimeInput
         {
@@ -54,6 +54,14 @@ namespace Dawdle.Client.Controls
             set => SetValue(LengthOutputProperty, value);
         }
 
+        public static readonly DependencyProperty EndReachedOutputProperty = DependencyProperty.Register("EndReachedOutput", typeof(long), typeof(PlayerControl));
+
+        public long EndReachedOutput
+        {
+            get => (long)GetValue(EndReachedOutputProperty);
+            set => SetValue(EndReachedOutputProperty, value);
+        }
+
         public PlayerControl()
         {
             InitializeComponent();
@@ -65,6 +73,7 @@ namespace Dawdle.Client.Controls
             VlcControl.SourceProvider.MediaPlayer.Playing += MediaPlayerOnPlaying;
             VlcControl.SourceProvider.MediaPlayer.TimeChanged += MediaPlayerOnTimeChanged;
             VlcControl.SourceProvider.MediaPlayer.LengthChanged += MediaPlayerOnLengthChanged;
+            VlcControl.SourceProvider.MediaPlayer.EndReached += MediaPlayerOnEndReached;
         }
 
         private async void MediaPlayerOnPlaying(object sender, VlcMediaPlayerPlayingEventArgs vlcMediaPlayerPlayingEventArgs)
@@ -100,16 +109,32 @@ namespace Dawdle.Client.Controls
             });
         }
 
-        private static void UriInputted(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private async void MediaPlayerOnEndReached(object sender, VlcMediaPlayerEndReachedEventArgs vlcMediaPlayerEndReachedEventArgs)
         {
-            var player = (PlayerControl)d;
-            player.VlcControl.SourceProvider.MediaPlayer.SetMedia((Uri)e.NewValue);
+            await Task.Factory.StartNew(() =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    EndReachedOutput = VlcControl.SourceProvider.MediaPlayer.Length;
+                });
+            });
         }
 
-        private static void PlayingInputted(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static object UriInputted(DependencyObject d, object baseValue)
         {
             var player = (PlayerControl)d;
-            if ((bool)e.NewValue)
+            if ((Uri)baseValue != null)
+            {
+                player.VlcControl.SourceProvider.MediaPlayer.SetMedia((Uri)baseValue);
+            }
+
+            return baseValue;
+        }
+
+        private static object PlayingInputted(DependencyObject d, object baseValue)
+        {
+            var player = (PlayerControl)d;
+            if ((bool)baseValue)
             {
                 ThreadPool.QueueUserWorkItem(i =>
                 {
@@ -123,12 +148,16 @@ namespace Dawdle.Client.Controls
                     player.VlcControl.SourceProvider.MediaPlayer.Pause();
                 });
             }
+
+            return baseValue;
         }
 
-        private static void TimeInputted(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static object TimeInputted(DependencyObject d, object baseValue)
         {
             var player = (PlayerControl)d;
-            player.VlcControl.SourceProvider.MediaPlayer.Time = (long)e.NewValue;
+            player.VlcControl.SourceProvider.MediaPlayer.Time = (long)baseValue;
+
+            return baseValue;
         }
     }
 }

@@ -77,6 +77,18 @@ namespace Dawdle.Client.ViewModels
             }
         }
 
+        private long _playerControlEndReachedOutput;
+        public long PlayerControlEndReachedOutput
+        {
+            get => _playerControlEndReachedOutput;
+            set
+            {
+                _playerControlEndReachedOutput = value;
+                PlayerInterfaceControlEndReachedInput = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _playerControlInterfacePlayingInput;
         public bool PlayerControlInterfacePlayingInput
         {
@@ -130,6 +142,17 @@ namespace Dawdle.Client.ViewModels
             set
             {
                 _playerInterfaceControlLengthInput = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private long _playerInterfaceControlEndReachedInput;
+        public long PlayerInterfaceControlEndReachedInput
+        {
+            get => _playerInterfaceControlEndReachedInput;
+            set
+            {
+                _playerInterfaceControlEndReachedInput = value;
                 OnPropertyChanged();
             }
         }

@@ -20,13 +20,15 @@
                                 PlayingOutput="{Binding PlayerControlPlayingOutput, Mode=OneWayToSource}"
                                 TimeInput="{Binding PlayerControlTimeInput, Mode=OneWay}"
                                 TimeOutput="{Binding PlayerControlTimeOutput, Mode=OneWayToSource}"
-                                LengthOutput="{Binding PlayerControlLengthOutput, Mode=OneWayToSource}" />
+                                LengthOutput="{Binding PlayerControlLengthOutput, Mode=OneWayToSource}"
+                                EndReachedOutput="{Binding PlayerControlEndReachedOutput, Mode=OneWayToSource}" />
         
         <controls:PlayerInterfaceControl x:Name="PlayerInterfaceControl" Grid.Row="1"
                                          PlayingInput="{Binding PlayerControlInterfacePlayingInput, Mode=OneWay}"
                                          PlayingOutput="{Binding PlayerControlInterfacePlayingOutput, Mode=OneWayToSource}"
                                          TimeInput="{Binding PlayerInterfaceControlTimeInput, Mode=OneWay}"
                                          TimeOutput="{Binding PlayerInterfaceControlTimeOutput, Mode=OneWayToSource}"
-                                         LengthInput="{Binding PlayerInterfaceControlLengthInput, Mode=OneWay}" />
+                                         LengthInput="{Binding PlayerInterfaceControlLengthInput, Mode=OneWay}"
+                                         EndReachedInput="{Binding PlayerInterfaceControlEndReachedInput, Mode=TwoWay}" />
     </Grid>
 </UserControl>

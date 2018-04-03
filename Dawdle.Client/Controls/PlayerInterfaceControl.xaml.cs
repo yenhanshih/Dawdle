@@ -9,7 +9,7 @@ namespace Dawdle.Client.Controls
         private static bool _draggingSlider;
         private static bool _playing;
 
-        public static readonly DependencyProperty PlayingInputProperty = DependencyProperty.Register("PlayingInput", typeof(bool), typeof(PlayerInterfaceControl), new PropertyMetadata(PlayingInputted));
+        public static readonly DependencyProperty PlayingInputProperty = DependencyProperty.Register("PlayingInput", typeof(bool), typeof(PlayerInterfaceControl), new PropertyMetadata(false, null, PlayingInputted));
 
         public bool PlayingInput
         {
@@ -24,7 +24,7 @@ namespace Dawdle.Client.Controls
             set => SetValue(PlayingOutputProperty, value);
         }
 
-        public static readonly DependencyProperty TimeInputProperty = DependencyProperty.Register("TimeInput", typeof(long), typeof(PlayerInterfaceControl), new PropertyMetadata(TimeInputted));
+        public static readonly DependencyProperty TimeInputProperty = DependencyProperty.Register("TimeInput", typeof(long), typeof(PlayerInterfaceControl), new PropertyMetadata((long)0, null, TimeInputted));
 
         public long TimeInput
         {
@@ -39,11 +39,18 @@ namespace Dawdle.Client.Controls
             set => SetValue(TimeOutputProperty, value);
         }
 
-        public static readonly DependencyProperty LengthInputProperty = DependencyProperty.Register("LengthInput", typeof(long), typeof(PlayerInterfaceControl), new PropertyMetadata(LengthInputted));
+        public static readonly DependencyProperty LengthInputProperty = DependencyProperty.Register("LengthInput", typeof(long), typeof(PlayerInterfaceControl), new PropertyMetadata((long)0, null, LengthInputted));
 
         public long LengthInput
         {
             set => SetValue(LengthInputProperty, value);
+        }
+
+        public static readonly DependencyProperty EndReachedInputProperty = DependencyProperty.Register("EndReachedInput", typeof(long), typeof(PlayerInterfaceControl), new PropertyMetadata((long)0, null, EndReachedInputtedCoerced));
+
+        public long EndReachedInput
+        {
+            set => SetValue(EndReachedInputProperty, value);
         }
 
         public PlayerInterfaceControl()
@@ -83,27 +90,42 @@ namespace Dawdle.Client.Controls
             }
         }
 
-        private static void PlayingInputted(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static object PlayingInputted(DependencyObject d, object baseValue)
         {
-            _playing = (bool)e.NewValue;
+            _playing = (bool)baseValue;
+
+            return baseValue;
         }
 
-        private static void TimeInputted(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static object TimeInputted(DependencyObject d, object baseValue)
         {
             var playerInterfaceControl = (PlayerInterfaceControl)d;
 
             if (!_draggingSlider)
             {
-                playerInterfaceControl.ProgressBar.Value = (long)e.NewValue;
-                playerInterfaceControl.CurrentTime.Text = TimeSpan.FromMilliseconds((long)e.NewValue).ToString("hh\\:mm\\:ss");
+                playerInterfaceControl.ProgressBar.Value = (long)baseValue;
+                playerInterfaceControl.CurrentTime.Text = TimeSpan.FromMilliseconds((long)baseValue).ToString("hh\\:mm\\:ss");
             }
+
+            return baseValue;
         }
 
-        private static void LengthInputted(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static object LengthInputted(DependencyObject d, object baseValue)
         {
             var playerInterfaceControl = (PlayerInterfaceControl)d;
-            playerInterfaceControl.ProgressBar.Maximum = (long)e.NewValue;
-            playerInterfaceControl.CurrentLength.Text = TimeSpan.FromMilliseconds((long)e.NewValue).ToString("hh\\:mm\\:ss");
+            playerInterfaceControl.ProgressBar.Maximum = (long)baseValue;
+            playerInterfaceControl.CurrentLength.Text = TimeSpan.FromMilliseconds((long)baseValue).ToString("hh\\:mm\\:ss");
+
+            return baseValue;
+        }
+
+        private static object EndReachedInputtedCoerced(DependencyObject d, object basevalue)
+        {
+            var playerInterfaceControl = (PlayerInterfaceControl)d;
+            playerInterfaceControl.ProgressBar.Value = (long)basevalue;
+            playerInterfaceControl.CurrentTime.Text = TimeSpan.FromMilliseconds((long)basevalue).ToString("hh\\:mm\\:ss");
+
+            return basevalue;
         }
     }
 }
