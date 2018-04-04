@@ -11,10 +11,9 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="60" />
         </Grid.RowDefinitions>
 
-        <controls:PlayerControl Grid.Row="0" Grid.RowSpan="2"
+        <controls:PlayerControl Grid.Row="0"
                                 UriInput="{Binding PlayerControlUriInput, Mode=OneWay}"
                                 PlayingInput="{Binding PlayerControlPlayingInput, Mode=OneWay}"
                                 PlayingOutput="{Binding PlayerControlPlayingOutput, Mode=OneWayToSource}"
@@ -22,8 +21,9 @@
                                 TimeOutput="{Binding PlayerControlTimeOutput, Mode=OneWayToSource}"
                                 LengthOutput="{Binding PlayerControlLengthOutput, Mode=OneWayToSource}"
                                 EndReachedOutput="{Binding PlayerControlEndReachedOutput, Mode=OneWayToSource}" />
-        
-        <controls:PlayerInterfaceControl x:Name="PlayerInterfaceControl" Grid.Row="1"
+
+        <controls:PlayerInterfaceControl x:Name="PlayerInterfaceControl" Grid.Row="0" Opacity="0"
+                                         VerticalAlignment="Bottom"
                                          PlayingInput="{Binding PlayerControlInterfacePlayingInput, Mode=OneWay}"
                                          PlayingOutput="{Binding PlayerControlInterfacePlayingOutput, Mode=OneWayToSource}"
                                          TimeInput="{Binding PlayerInterfaceControlTimeInput, Mode=OneWay}"

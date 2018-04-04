@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:common="clr-namespace:Dawdle.Client.Common"
         xmlns:data="clr-namespace:Google.Apis.YouTube.v3.Data;assembly=Google.Apis.YouTube.v3"
-        xmlns:buttons="clr-namespace:Dawdle.Client.Controls.Buttons"
         mc:Ignorable="d"
         DataContext="{Binding Source={common:Locate}, Path=HomeViewModel}"
         MouseEnter="HomeView_OnMouseEnter" MouseLeave="HomeView_OnMouseLeave">
@@ -21,12 +20,12 @@
                 <ColumnDefinition Width="50" />
             </Grid.ColumnDefinitions>
             
-            <TextBox Grid.Column="0" Text="{Binding SearchText}" />
+            <!--<TextBox Grid.Column="0" Text="{Binding SearchText}" />
             
             <buttons:IconButton Grid.Column="1" Margin="5"
                                 Style="{StaticResource IconButton}" 
                                 Foreground="{DynamicResource MenuContentBrush}" 
-                                Icon="{DynamicResource SearchIcon}" />
+                                Icon="{DynamicResource SearchIcon}" /> -->
         </Grid>
         
         <ListView Grid.Row="1" x:Name="VideoListView"

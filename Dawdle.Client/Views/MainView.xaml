@@ -9,16 +9,16 @@
         mc:Ignorable="d"
         DataContext="{Binding Source={common:Locate}, Path=MainViewModel}"
         Title="Dawdle" AllowsTransparency="True" Topmost="True" WindowStyle="None" Width="400" Height="280"
-        MouseDown="MainView_MouseDown">
+        MouseEnter="MainVew_OnMouseEnter" MouseLeave="MainView_OnMouseLeave" MouseDown="MainView_MouseDown">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
-        <views:MenuView Grid.Row="0" />
 
-        <views:HomeView Grid.Row="1" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:MainView}}, Path=DataContext.IsHomeViewVisible, Converter={converters:BooleanToVisibilityCollapsedConverter}}" />
-        <views:VideoView Grid.Row="1" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:MainView}}, Path=DataContext.IsVideoViewVisible, Converter={converters:BooleanToVisibilityCollapsedConverter}}" />
+        <views:MenuView x:Name="MenuView" Grid.Row="0" Opacity="0"
+                        Canvas.ZIndex="1" />
+
+        <views:HomeView Grid.Row="0" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:MainView}}, Path=DataContext.IsHomeViewVisible, Converter={converters:BooleanToVisibilityCollapsedConverter}}" />
+        <views:VideoView Grid.Row="0" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:MainView}}, Path=DataContext.IsVideoViewVisible, Converter={converters:BooleanToVisibilityCollapsedConverter}}" />
     </Grid>
 </Window>
