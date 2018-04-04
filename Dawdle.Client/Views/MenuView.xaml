@@ -7,12 +7,11 @@
              xmlns:buttons="clr-namespace:Dawdle.Client.Controls.Buttons"
              mc:Ignorable="d"
              DataContext="{Binding Source={common:Locate}, Path=MenuViewModel}">
-    <StackPanel Height="50"
-                VerticalAlignment="Top"
+    <StackPanel VerticalAlignment="Top"
                 Background="{DynamicResource MenuBackgroundBrush}">
         <Grid Background="{DynamicResource MenuBackgroundBrush}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
+                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50" />
@@ -28,7 +27,7 @@
 
             <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50" />
+                    <RowDefinition Height="40" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50" />

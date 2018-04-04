@@ -6,14 +6,13 @@
              xmlns:buttons="clr-namespace:Dawdle.Client.Controls.Buttons"
              xmlns:sliders="clr-namespace:Dawdle.Client.Controls.Sliders"
              mc:Ignorable="d">
+
     <Grid>
         <Border x:Name="PlayerControlInterface" 
-                VerticalAlignment="Bottom"
-                BorderBrush="{DynamicResource MenuBackgroundBrush}"
-                Background="{DynamicResource MenuBackgroundBrush}">
+                VerticalAlignment="Bottom">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10" />
+                    <RowDefinition Height="20" />
                     <RowDefinition Height="50" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -22,10 +21,14 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <sliders:VideoSlider x:Name="ProgressBar" 
-                                     Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
-                                     Margin="0 -4 0 0"
+                <Rectangle Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"
+                           Fill="{DynamicResource HeaderBackgroundBrush}"
+                           OpacityMask="{DynamicResource HeaderBackgroundOpacityMask}"
+                           Opacity="0.6"/>
+
+                <sliders:VideoSlider x:Name="ProgressBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
                                      Style="{StaticResource VideoSlider}"
+                                     Margin="10 0 10 0" VerticalAlignment="Bottom"
                                      IsMoveToPointEnabled="True" 
                                      Thumb.DragStarted="ProgressBar_OnDragStarted" Thumb.DragDelta="ProgressBar_OnDragDelta" Thumb.DragCompleted="ProgressBar_OnDragCompleted" />
 

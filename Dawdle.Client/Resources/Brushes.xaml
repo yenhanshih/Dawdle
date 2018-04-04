@@ -5,4 +5,15 @@
     <Brush x:Key="DisabledBrush">#AAAAAA</Brush>
     <Brush x:Key="MouseOverHighlightBrush">#555555</Brush>
     <Brush x:Key="ScrollBarBrush">#AAAAAA</Brush>
+
+    <LinearGradientBrush x:Key="HeaderBackgroundBrush" EndPoint="0 0" StartPoint="0 1">
+        <GradientStop Color="#000000" Offset="0"/>
+        <GradientStop Color="#000000" Offset="1"/>
+    </LinearGradientBrush>
+    
+    <LinearGradientBrush x:Key="HeaderBackgroundOpacityMask" StartPoint="0 1" EndPoint="0 0">
+        <GradientStop Color="#FFFFFF" Offset="0"/>
+        <GradientStop Color="#FFFFFF" Offset="0.1"/>
+        <GradientStop Color="Transparent" Offset="0.8"/>
+    </LinearGradientBrush>
 </ResourceDictionary>

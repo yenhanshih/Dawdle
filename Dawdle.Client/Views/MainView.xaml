@@ -8,7 +8,7 @@
         xmlns:converters="clr-namespace:Dawdle.Client.Common.Converters"
         mc:Ignorable="d"
         DataContext="{Binding Source={common:Locate}, Path=MainViewModel}"
-        Title="Dawdle" AllowsTransparency="True" Topmost="True" WindowStyle="None" Width="400" Height="280"
+        Title="Dawdle" AllowsTransparency="True" Topmost="True" WindowStyle="None" Width="550" Height="317"
         MouseEnter="MainVew_OnMouseEnter" MouseLeave="MainView_OnMouseLeave" MouseDown="MainView_MouseDown">
     <Grid>
         <Grid.RowDefinitions>

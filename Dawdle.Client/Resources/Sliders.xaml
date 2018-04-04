@@ -11,7 +11,7 @@
                             <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Track Grid.Row="1" x:Name="PART_Track"   >
+                        <Track Grid.Row="1" x:Name="PART_Track">
                             <Track.DecreaseRepeatButton>
                                 <RepeatButton Style="{DynamicResource SliderRepeatButtonLeft}"  Command="Slider.DecreaseLarge" />
                             </Track.DecreaseRepeatButton>

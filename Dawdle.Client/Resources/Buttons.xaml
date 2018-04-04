@@ -82,20 +82,23 @@
     </Style>
 
     <Style x:Key="SliderRepeatButtonRight" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Height" Value="3" />
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="IsTabStop" Value="false" />
         <Setter Property="Focusable" Value="false" />
+        <Setter Property="Opacity" Value="0.5" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
-                    <Border Background="Black" BorderThickness="0" Height="5" />
+                    <Border Background="{DynamicResource ScrollBarBrush}" BorderThickness="0" Height="5" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
     <Style x:Key="SliderRepeatButtonLeft" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Height" Value="3" />
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Template">
@@ -106,5 +109,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
 </ResourceDictionary>

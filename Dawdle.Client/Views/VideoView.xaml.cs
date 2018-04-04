@@ -14,13 +14,13 @@ namespace Dawdle.Client.Views
 
         private void VideoView_OnMouseEnter(object sender, MouseEventArgs e)
         {
-            var animation = new DoubleAnimation(0, 0.8, new Duration(new TimeSpan(0, 0, 0, 0, 500)));
+            var animation = new DoubleAnimation(0, 1, new Duration(new TimeSpan(0, 0, 0, 0, 500)));
             PlayerInterfaceControl.BeginAnimation(OpacityProperty, animation);
         }
 
         private void VideoView_OnMouseLeave(object sender, MouseEventArgs e)
         {
-            var animation = new DoubleAnimation(0.8, 0, new Duration(new TimeSpan(0, 0, 0, 0, 500)));
+            var animation = new DoubleAnimation(1, 0, new Duration(new TimeSpan(0, 0, 0, 0, 500)));
             PlayerInterfaceControl.BeginAnimation(OpacityProperty, animation);
         }
 

@@ -22,8 +22,8 @@
                                 LengthOutput="{Binding PlayerControlLengthOutput, Mode=OneWayToSource}"
                                 EndReachedOutput="{Binding PlayerControlEndReachedOutput, Mode=OneWayToSource}" />
 
-        <controls:PlayerInterfaceControl x:Name="PlayerInterfaceControl" Grid.Row="0" Opacity="0"
-                                         VerticalAlignment="Bottom"
+        <controls:PlayerInterfaceControl x:Name="PlayerInterfaceControl" Grid.Row="0"
+                                         VerticalAlignment="Bottom" Opacity="0"
                                          PlayingInput="{Binding PlayerControlInterfacePlayingInput, Mode=OneWay}"
                                          PlayingOutput="{Binding PlayerControlInterfacePlayingOutput, Mode=OneWayToSource}"
                                          TimeInput="{Binding PlayerInterfaceControlTimeInput, Mode=OneWay}"
