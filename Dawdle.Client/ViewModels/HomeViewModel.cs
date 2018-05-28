@@ -42,7 +42,7 @@ namespace Dawdle.Client.ViewModels
         {
             _parentMainViewModel = parentMainViewModel;
 
-            GetYoutubeVideoTitles("Google");
+            SearchAndReloadVideoList("Google");
         }
 
         private RelayCommand _playVideo;
@@ -60,29 +60,16 @@ namespace Dawdle.Client.ViewModels
             }
         }
 
-        private RelayCommand _search;
-
-        public RelayCommand Search
+        public async void SearchAndReloadVideoList(string query)
         {
-            get
-            {
-                return _search ?? (_search = new RelayCommand(_ =>
-                {
-                    GetYoutubeVideoTitles(SearchText);
-                }));
-            }
-        }
-
-        private async void GetYoutubeVideoTitles(string searchString)
-        {
-            var youtubeService = new YouTubeService(new BaseClientService.Initializer()
+            var youtubeService = new YouTubeService(new BaseClientService.Initializer
             {
                 ApiKey = "AIzaSyDsDJMSZsQAS4-MTiPzXtG_KK4KXiRx9E8",
                 ApplicationName = GetType().ToString()
             });
 
             var searchListRequest = youtubeService.Search.List("snippet");
-            searchListRequest.Q = searchString;
+            searchListRequest.Q = query;
             searchListRequest.MaxResults = 50;
 
             // Call the search.list method to retrieve results matching the specified query term.

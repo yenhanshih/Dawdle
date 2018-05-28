@@ -10,6 +10,7 @@ namespace Dawdle.Client.ViewModels
         , IMenuViewModel
     {
         private readonly IMainViewModel _parentMainViewModel;
+        private readonly IHomeViewModel _homeViewModel;
 
         private bool _isCurrentContextHome;
         public bool IsCurrentContextHome
@@ -33,9 +34,11 @@ namespace Dawdle.Client.ViewModels
             }
         }
 
-        public MenuViewModel(IMainViewModel mainViewModel)
+        public MenuViewModel(IMainViewModel mainViewModel, IHomeViewModel homeViewModel)
         {
             _parentMainViewModel = mainViewModel;
+            _homeViewModel = homeViewModel;
+
             _parentMainViewModel.CurrentViewChanged.Subscribe(context =>
             {
                 ResetCurrentContext();
@@ -72,6 +75,18 @@ namespace Dawdle.Client.ViewModels
                 return _setVideoView ?? (_setVideoView = new RelayCommand(_ =>
                 {
                     _parentMainViewModel.ChangeContext(Context.Play);
+                }));
+            }
+        }
+
+        private RelayCommand _search;
+        public RelayCommand Search
+        {
+            get
+            {
+                return _search ?? (_search = new RelayCommand(query =>
+                {
+                    _homeViewModel.SearchAndReloadVideoList(query.ToString());
                 }));
             }
         }

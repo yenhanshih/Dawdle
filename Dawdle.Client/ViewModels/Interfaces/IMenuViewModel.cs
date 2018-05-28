@@ -9,5 +9,6 @@ namespace Dawdle.Client.ViewModels.Interfaces
         bool IsCurrentContextPlay { get; set; }
         RelayCommand SetHomeView { get; }
         RelayCommand SetVideoView { get; }
+        RelayCommand Search { get; }
     }
 }

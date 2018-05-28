@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Resources/Buttons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Resources/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Resources/Sliders.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/TextBoxes.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Resources/Thumbs.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
