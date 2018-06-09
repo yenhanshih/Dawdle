@@ -67,7 +67,7 @@ namespace Dawdle.Client.Controls
             InitializeComponent();
 
             // Choose x86 or x64 library
-            var vlcDirectoryPath = Path.Combine(Environment.CurrentDirectory, IntPtr.Size == 4 ? "../../../packages/VideoLAN.LibVLC.Windows.3.0.0-alpha2/build/x86" : "../../../packages/VideoLAN.LibVLC.Windows.3.0.0-alpha2/build/x64");
+            var vlcDirectoryPath = Path.Combine(Environment.CurrentDirectory, IntPtr.Size == 4 ? "../../../packages/VideoLAN.LibVLC.Windows.3.0.0-alpha3/build/x86" : "../../../packages/VideoLAN.LibVLC.Windows.3.0.0-alpha3/build/x64");
             VlcControl.SourceProvider.CreatePlayer(new DirectoryInfo(vlcDirectoryPath));
 
             VlcControl.SourceProvider.MediaPlayer.Playing += MediaPlayerOnPlaying;

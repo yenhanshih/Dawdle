@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Dawdle.Client.Common;
 using Dawdle.Client.Models.Enums;
@@ -6,7 +7,9 @@ using Dawdle.Client.ViewModels.Interfaces;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
-using MyToolkit.Multimedia;
+using YoutubeExplode;
+using YoutubeExplode.Models;
+using YoutubeExplode.Models.MediaStreams;
 
 namespace Dawdle.Client.ViewModels
 {
@@ -14,6 +17,7 @@ namespace Dawdle.Client.ViewModels
         : NotifyPropertyChanged
         , IHomeViewModel
     {
+        private readonly IYoutubeClient _youtubeClient;
         private readonly IMainViewModel _parentMainViewModel;
 
         private List<SearchResult> _videos;
@@ -38,8 +42,9 @@ namespace Dawdle.Client.ViewModels
             }
         }
 
-        public HomeViewModel(IMainViewModel parentMainViewModel)
+        public HomeViewModel(IYoutubeClient youtubeClient, IMainViewModel parentMainViewModel)
         {
+            _youtubeClient = youtubeClient;
             _parentMainViewModel = parentMainViewModel;
 
             SearchAndReloadVideoList("Google");
@@ -53,9 +58,10 @@ namespace Dawdle.Client.ViewModels
                 return _playVideo ?? (_playVideo = new RelayCommand(async id =>
                 {
                     var resourceId = (ResourceId)id;
-                    var youtube = await YouTube.GetUrisAsync(resourceId.VideoId.ToString());
+                    var videoMediaStreamInfo = await _youtubeClient.GetVideoMediaStreamInfosAsync(resourceId.VideoId);
+                    var muxedStreamInfo = videoMediaStreamInfo.Muxed.WithHighestVideoQuality();
                     _parentMainViewModel.ChangeContext(Context.Play);
-                    _parentMainViewModel.ReceivedPlaySignal.OnNext(youtube.First().Uri);
+                    _parentMainViewModel.ReceivedPlaySignal.OnNext(new Uri(muxedStreamInfo.Url));
                 }));
             }
         }

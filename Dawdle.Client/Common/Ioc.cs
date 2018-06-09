@@ -1,6 +1,7 @@
 ﻿using Dawdle.Client.ViewModels;
 using Dawdle.Client.ViewModels.Interfaces;
 using LightInject;
+using YoutubeExplode;
 
 namespace Dawdle.Client.Common
 {
@@ -21,6 +22,7 @@ namespace Dawdle.Client.Common
             container.Register<IVideoViewModel, VideoViewModel>(new PerContainerLifetime());
             container.Register<IMenuViewModel, MenuViewModel>(new PerContainerLifetime());
             container.Register<IMainViewModel, MainViewModel>(new PerContainerLifetime());
+            container.Register<IYoutubeClient, YoutubeClient>(new PerContainerLifetime());
 
             return container;
         }
