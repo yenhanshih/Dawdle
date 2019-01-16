@@ -39,7 +39,7 @@
                                     Style="{StaticResource IconButton}" 
                                     Foreground="{DynamicResource MenuContentBrush}" 
                                     Icon="{DynamicResource SearchIcon}"
-                                    Click="ButtonBase_OnClick"/>
+                                    Click="ButtonBase_OnClick" />
                 
                 <TextBox x:Name="SearchTextBox" Grid.Row="0" Grid.Column="1" Width="0"
                          Style="{StaticResource SearchTextBox}"

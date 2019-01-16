@@ -87,6 +87,7 @@ namespace Dawdle.Client.ViewModels
                 return _search ?? (_search = new RelayCommand(query =>
                 {
                     _homeViewModel.SearchAndReloadVideoList(query.ToString());
+                    SetHomeView.Execute(null);
                 }));
             }
         }

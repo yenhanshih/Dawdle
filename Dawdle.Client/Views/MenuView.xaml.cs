@@ -22,15 +22,21 @@ namespace Dawdle.Client.Views
                 var animation = new DoubleAnimation(0, TimeSpan.FromSeconds(0.3));
                 animation.Completed += (s, _) => Expanded = false;
                 SearchTextBox.BeginAnimation(WidthProperty, animation);
+
+                // Perform search when search textbox collapses
+                var query = SearchTextBox.Text;
+                SearchTextBox.Text = string.Empty;
+                Search(query);
             }
             else
             {
                 var animation = new DoubleAnimation(400, TimeSpan.FromSeconds(0.3));
                 animation.Completed += (s, _) => Expanded = true;
                 SearchTextBox.BeginAnimation(WidthProperty, animation);
-            }
 
-            SearchTextBox.Focus();
+                // Focus on search textbox when expanded
+                SearchTextBox.Focus();
+            }
         }
 
         private void SearchTextBox_OnKeyUp(object sender, KeyEventArgs e)
@@ -38,12 +44,15 @@ namespace Dawdle.Client.Views
             if (e.Key == Key.Enter)
             {
                 ButtonBase_OnClick(sender, e);
+            }
+        }
 
-                var viewModel = (MenuViewModel)DataContext;
-                if (viewModel.Search.CanExecute(SearchTextBox.Text))
-                {
-                    viewModel.Search.Execute(SearchTextBox.Text);
-                }
+        private void Search(string query)
+        {
+            var viewModel = (MenuViewModel)DataContext;
+            if (viewModel.Search.CanExecute(query))
+            {
+                viewModel.Search.Execute(query);
             }
         }
     }
