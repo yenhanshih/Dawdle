@@ -8,7 +8,6 @@ using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using YoutubeExplode;
-using YoutubeExplode.Models;
 using YoutubeExplode.Models.MediaStreams;
 
 namespace Dawdle.Client.ViewModels
