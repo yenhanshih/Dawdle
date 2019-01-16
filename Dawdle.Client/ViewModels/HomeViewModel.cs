@@ -70,7 +70,7 @@ namespace Dawdle.Client.ViewModels
         {
             var youtubeService = new YouTubeService(new BaseClientService.Initializer
             {
-                ApiKey = "AIzaSyDsDJMSZsQAS4-MTiPzXtG_KK4KXiRx9E8",
+                ApiKey = "AIzaSyCL1Ux_Zu3A4H30538nqqVyF-fVPCTVOfo",
                 ApplicationName = GetType().ToString()
             });
 
