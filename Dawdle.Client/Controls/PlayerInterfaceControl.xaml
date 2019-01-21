@@ -22,8 +22,8 @@
                 </Grid.ColumnDefinitions>
 
                 <Rectangle Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"
-                           Fill="{DynamicResource HeaderBackgroundBrush}"
-                           OpacityMask="{DynamicResource HeaderBackgroundOpacityMask}"
+                           Fill="{DynamicResource BorderBackgroundBrush}"
+                           OpacityMask="{DynamicResource BottomBorderBackgroundOpacityMask}"
                            Opacity="0.6"/>
 
                 <sliders:VideoSlider x:Name="ProgressBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"

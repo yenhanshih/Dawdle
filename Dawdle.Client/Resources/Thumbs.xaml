@@ -25,7 +25,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Ellipse Margin="-2 0 -2 0" Height="10" Width="10" Fill="Red" />
+                    <Ellipse Margin="-2 0 -2 0" Height="10" Width="10" Fill="{DynamicResource HighlightBrush}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -7,51 +7,53 @@
              xmlns:buttons="clr-namespace:Dawdle.Client.Controls.Buttons"
              mc:Ignorable="d"
              DataContext="{Binding Source={common:Locate}, Path=MenuViewModel}">
-    <StackPanel VerticalAlignment="Top"
-                Background="{DynamicResource MenuBackgroundBrush}">
-        <Grid Background="{DynamicResource MenuBackgroundBrush}">
+    <Grid VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Rectangle Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="2"
+                   Fill="{DynamicResource BorderBackgroundBrush}"
+                   OpacityMask="{DynamicResource TopBorderBackgroundOpacityMask}"
+                   Opacity="0.6"/>
+
+        <buttons:IconRadioButton Grid.Row="0" Grid.Column="0"
+                                 Style="{StaticResource IconRadioButton}" 
+                                 Foreground="{DynamicResource MenuContentBrush}" 
+                                 Icon="{DynamicResource MenuHome}"
+                                 IsChecked="{Binding IsCurrentContextHome}"
+                                 Command="{Binding SetHomeView}" />
+
+        <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="50" />
             </Grid.ColumnDefinitions>
-
-            <buttons:IconRadioButton Grid.Row="0" Grid.Column="0"
+            
+            <buttons:IconButton Grid.Row="0" Grid.Column="0"
+                                Style="{StaticResource IconButton}" 
+                                Foreground="{DynamicResource MenuContentBrush}" 
+                                Icon="{DynamicResource SearchIcon}"
+                                Click="ButtonBase_OnClick" />
+            
+            <TextBox x:Name="SearchTextBox" Grid.Row="0" Grid.Column="1" Width="0"
+                     Style="{StaticResource SearchTextBox}"
+                     KeyUp="SearchTextBox_OnKeyUp" />
+            
+            <buttons:IconRadioButton Grid.Row="0" Grid.Column="2"
                                      Style="{StaticResource IconRadioButton}" 
                                      Foreground="{DynamicResource MenuContentBrush}" 
-                                     Icon="{DynamicResource MenuHome}"
-                                     IsChecked="{Binding IsCurrentContextHome}"
-                                     Command="{Binding SetHomeView}" />
-
-            <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="50" />
-                </Grid.ColumnDefinitions>
-                
-                <buttons:IconButton Grid.Row="0" Grid.Column="0"
-                                    Style="{StaticResource IconButton}" 
-                                    Foreground="{DynamicResource MenuContentBrush}" 
-                                    Icon="{DynamicResource SearchIcon}"
-                                    Click="ButtonBase_OnClick" />
-                
-                <TextBox x:Name="SearchTextBox" Grid.Row="0" Grid.Column="1" Width="0"
-                         Style="{StaticResource SearchTextBox}"
-                         KeyUp="SearchTextBox_OnKeyUp" />
-                
-                <buttons:IconRadioButton Grid.Row="0" Grid.Column="2"
-                                         Style="{StaticResource IconRadioButton}" 
-                                         Foreground="{DynamicResource MenuContentBrush}" 
-                                         Icon="{DynamicResource MenuWatch}"
-                                         IsChecked="{Binding IsCurrentContextPlay}"
-                                         Command="{Binding SetVideoView}" />
-            </Grid>
+                                     Icon="{DynamicResource MenuWatch}"
+                                     IsChecked="{Binding IsCurrentContextPlay}"
+                                     Command="{Binding SetVideoView}" />
         </Grid>
-    </StackPanel>
+    </Grid>
 </UserControl>

@@ -104,7 +104,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
-                    <Border SnapsToDevicePixels="True" Background="Red" BorderThickness="0" Height="5" />
+                    <Border SnapsToDevicePixels="True" Background="{DynamicResource HighlightBrush}" BorderThickness="0" Height="5" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
